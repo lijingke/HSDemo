@@ -1,0 +1,57 @@
+//
+//  UIView+Extension.swift
+//  XSDemo
+//
+//  Created by 李京珂 on 2019/11/2.
+//  Copyright © 2019 李京珂. All rights reserved.
+//
+
+import UIKit
+
+extension UIView {
+    
+    func cornerWithRadius(redius:CGFloat){
+        self.cornerWithRadiusrectCornerType(radius: redius, rectCornerType: UIRectCorner.allCorners)
+    }
+    
+    func cornerWithRadiusrectCornerType(radius:CGFloat,rectCornerType:UIRectCorner){
+        let maskPath:UIBezierPath = UIBezierPath.init(roundedRect: self.bounds, byRoundingCorners: rectCornerType, cornerRadii: CGSize(width:radius, height:radius))
+        let maskLayer = CAShapeLayer.init();
+        maskLayer.frame = self.bounds;
+        maskLayer.path = maskPath.cgPath;
+        self.layer.mask = maskLayer;
+    }
+    
+    func cornerShadowWithRadius(radius:CGFloat){
+        self.layer.cornerRadius = radius;
+        self.layer.shadowColor = UIColorFromRGB(rgbValue: 0xc7c7c7).cgColor;
+        self.layer.shadowOffset = CGSize(width:0, height:1);//偏移距离
+        self.layer.shadowOpacity = 0.5;//不透明度
+        self.layer.shadowRadius = 5.0;//半径
+    }
+    
+    func UIColorFromRGB(rgbValue: UInt) -> UIColor {
+        return UIColor(
+            red: CGFloat((rgbValue & 0xFF0000) >> 16) / 255.0,
+            green: CGFloat((rgbValue & 0x00FF00) >> 8) / 255.0,
+            blue: CGFloat(rgbValue & 0x0000FF) / 255.0,
+            alpha: CGFloat(1.0)
+        )
+    }
+    
+    func getFirstViewController()->UIViewController?{
+        
+        for view in sequence(first: self.superview, next: {$0?.superview}){
+            
+            if let responder = view?.next{
+                
+                if responder.isKind(of: UIViewController.self){
+                    
+                    return responder as? UIViewController
+                }
+            }
+        }
+        return nil
+    }
+    
+}
