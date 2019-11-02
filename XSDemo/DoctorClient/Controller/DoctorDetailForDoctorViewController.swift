@@ -20,8 +20,7 @@ class DoctorDetailForDoctorViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.barTintColor = UIColorFromRGB(rgbValue: 0x4882FF)
-        navigationController?.navigationBar.isTranslucent = false
-        navigationController?.navigationBar.shadowImage = UIImage()
+        navLine()?.isHidden = true
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor:UIColor.white, NSAttributedString.Key.font : UIFont.semibold(20)!]
         
         let item = UIBarButtonItem.init(customView:rightBtn)
@@ -31,10 +30,9 @@ class DoctorDetailForDoctorViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         navigationController?.navigationBar.barTintColor = .white
-        navigationController?.navigationBar.isTranslucent = false
-
+        navLine()?.isHidden = false
     }
-
+    
     
     @objc func shareAction(_ sender: UIButton) {
         print("点击了分享")

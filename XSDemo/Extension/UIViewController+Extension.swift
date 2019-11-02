@@ -19,4 +19,10 @@ extension UIViewController{
         )
     }
     
+    func navLine() -> UIView? {
+        let backgroundView = navigationController?.navigationBar.subviews.first
+        let navLine = backgroundView?.subviews.first
+        return navLine
+    }
+    
 }
