@@ -1,9 +1,9 @@
 //
 //  FollowUpPackageForDoctorCell.swift
-//  NGOFundManager
+//  XSDemo
 //
 //  Created by 李京珂 on 2019/11/2.
-//  Copyright © 2019 GRDOC. All rights reserved.
+//  Copyright © 2019 李京珂. All rights reserved.
 //
 
 import UIKit

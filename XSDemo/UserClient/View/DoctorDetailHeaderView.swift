@@ -1,6 +1,6 @@
 //
 //  DoctorDetailHeaderView.swift
-//  HXS_Demo
+//  XS_Demo
 //
 //  Created by 李京珂 on 2019/10/28.
 //  Copyright © 2019 李京珂. All rights reserved.

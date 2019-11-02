@@ -44,7 +44,7 @@ class HomeViewController: UIViewController {
         }
         
         doctorEntryBtn.snp.makeConstraints { (make) in
-            make.top.equalTo(userEtryBtn.snp.bottom).offset(10)
+            make.top.equalTo(userEtryBtn.snp.bottom).offset(50)
             make.centerX.equalToSuperview()
         }
     }
@@ -67,7 +67,8 @@ class HomeViewController: UIViewController {
         let btn = UIButton(type: .custom)
         btn.tag = 1000
         btn.setTitle("用户端入口", for: .normal)
-        btn.setTitleColor(.black, for: .normal)
+        btn.setTitleColor(.white, for: .normal)
+        btn.setBackgroundImage(UIImage(named: "doctor_page_btn_setting_bg"), for: .normal)
         btn.addTarget(self, action: #selector(clickAction(_:)), for: .touchDown)
         return btn
     }()
@@ -76,7 +77,8 @@ class HomeViewController: UIViewController {
         let btn = UIButton(type: .custom)
         btn.tag = 1001
         btn.setTitle("医生端入口", for: .normal)
-        btn.setTitleColor(.black, for: .normal)
+        btn.setTitleColor(.white, for: .normal)
+        btn.setBackgroundImage(UIImage(named: "doctor_page_btn_setting_bg"), for: .normal)
         btn.addTarget(self, action: #selector(clickAction(_:)), for: .touchDown)
         return btn
     }()
