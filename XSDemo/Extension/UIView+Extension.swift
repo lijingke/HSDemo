@@ -55,3 +55,42 @@ extension UIView {
     }
     
 }
+
+extension UIView {
+    
+    public func addGradientLayer(
+        start: CGPoint = CGPoint(x: 0, y: 0), //渐变起点
+        end: CGPoint = CGPoint(x: 1, y: 1), //渐变终点
+        frame: CGRect,
+        colors: [CGColor]
+    ) {
+        layoutIfNeeded()
+        removeGradientLayer()
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.startPoint = start
+        gradientLayer.endPoint = end
+        gradientLayer.frame = frame
+        gradientLayer.colors = colors
+        layer.insertSublayer(gradientLayer, at: 0)
+    }
+    
+    public func removeGradientLayer() {
+        guard let layers = self.layer.sublayers else { return }
+        for layer in layers {
+            if layer.isKind(of: CAGradientLayer.self) {
+                layer.removeFromSuperlayer()
+            }
+        }
+    }
+    
+}
+
+extension UIView{
+    func addCorner(conrners: UIRectCorner , radius: CGFloat) {
+        let maskPath = UIBezierPath(roundedRect: self.bounds, byRoundingCorners: conrners, cornerRadii: CGSize(width: radius, height: radius))
+        let maskLayer = CAShapeLayer()
+        maskLayer.frame = self.bounds
+        maskLayer.path = maskPath.cgPath
+        self.layer.mask = maskLayer
+    }
+}

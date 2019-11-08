@@ -26,23 +26,10 @@ class DoctorDetailHeaderForDoctorView: UIView {
     }
     
     func showAllInfo(_ isShowAll: Bool) {
-        workingYears.isHidden = !isShowAll
-        workingAchievement.isHidden = !isShowAll
         if isShowAll {
-            goodAt.numberOfLines = 0
-            foldBtn.snp.remakeConstraints { (make) in
-                make.top.equalTo(workingAchievement.snp.bottom).offset(10)
-                make.centerX.equalToSuperview()
-                make.size.equalTo(16)
-            }
+            doctorDetail.numberOfLines = 0
         }else {
-            goodAt.numberOfLines = 2
-            foldBtn.snp.remakeConstraints { (make) in
-                make.top.equalTo(goodAt.snp.bottom).offset(10)
-                make.centerX.equalToSuperview()
-                make.size.equalTo(16)
-            }
-            
+            doctorDetail.numberOfLines = 2
         }
         layoutIfNeeded()
     }
@@ -101,7 +88,7 @@ class DoctorDetailHeaderForDoctorView: UIView {
     lazy var isWatchBtn: UIButton = {
         let btn = UIButton(type: .custom)
         btn.tag = 1000
-        btn.setImage(UIImage(named: "hook_follow"), for: .normal)
+        btn.setImage(UIImage(named: "blue_hook"), for: .normal)
         btn.setTitle("已关注", for: .normal)
         btn.setTitleColor(UIColorFromRGB(rgbValue: 0x4882FF), for: .normal)
         btn.titleLabel?.font = UIFont.medium(16)
@@ -173,29 +160,11 @@ class DoctorDetailHeaderForDoctorView: UIView {
         return label
     }()
     
-    lazy var goodAt: UILabel = {
-        let label = UILabel()
-        label.textColor = .white
-        label.font = UIFont.regular(14)
-        label.numberOfLines = 2
-        return label
-    }()
-    
-    lazy var workingYears: UILabel = {
+    lazy var doctorDetail: UILabel = {
         let label = UILabel()
         label.textColor = .white
         label.font = UIFont.regular(14)
         label.numberOfLines = 0
-        label.isHidden = true
-        return label
-    }()
-    
-    lazy var workingAchievement: UILabel = {
-        let label = UILabel()
-        label.textColor = .white
-        label.font = UIFont.regular(14)
-        label.numberOfLines = 0
-        label.isHidden = true
         return label
     }()
     
@@ -224,16 +193,13 @@ extension DoctorDetailHeaderForDoctorView {
         }
         doctorName.text = doctorInfo.doctorName
         
-        //        tag1.isHidden = !(doctorInfo.doctorTags?.contains(1) ?? false)
-        //        tag2.isHidden = !(doctorInfo.doctorTags?.contains(4) ?? false)
-        
         hospitalName.text = doctorInfo.hospitalName
         officeName.text = doctorInfo.officeName
         influenceNumber.text = doctorInfo.influenceNumber
         focusedNumber.text = doctorInfo.follewNumber
         
         if doctorInfo.isFollow == true {
-            isWatchBtn.setImage(UIImage(named: "hook_follow"), for: .normal)
+            isWatchBtn.setImage(UIImage(named: "blue_hook"), for: .normal)
             isWatchBtn.setTitle("已关注", for: .normal)
             isWatchBtn.setTitleColor(UIColorFromRGB(rgbValue: 0x4882FF), for: .normal)
             isWatchBtn.backgroundColor = .white
@@ -246,15 +212,25 @@ extension DoctorDetailHeaderForDoctorView {
             isWatchBtn.layer.borderColor = UIColor.white.cgColor
         }
         
-        if let text = doctorInfo.goodAt {
-            goodAt.text = "擅长：\(text)"
+        var goodAt = ""
+        var workingYears = ""
+        var achievement = ""
+        
+        if let text = doctorInfo.goodAt, text.count > 0 {
+            goodAt = "擅长：\(text)"
         }
-        if let text = doctorInfo.workingYears {
-            workingYears.text = "从业年：\(text)"
+        if let text = doctorInfo.workingYears,  text.count > 0 {
+            workingYears = "\n\n从业年：\(text)"
         }
-        if let text = doctorInfo.workingAchievement {
-            workingAchievement.text = "行业成就：\(text)"
+        if let text = doctorInfo.workingAchievement,  text.count > 0 {
+            achievement = "\n\n行业成就：\(text)"
         }
+        
+        doctorDetail.text = goodAt + workingYears + achievement
+        
+        doctorDetail.numberOfLines = doctorDetail.lines > 2 ? 2 : doctorDetail.lines
+        
+        foldBtn.isHidden = !(doctorDetail.lines > 2)
     }
     
     fileprivate func configureUI() {
@@ -273,9 +249,7 @@ extension DoctorDetailHeaderForDoctorView {
         addSubview(focusedPrefix)
         addSubview(focusedNumber)
         addSubview(focusedTail)
-        addSubview(goodAt)
-        addSubview(workingYears)
-        addSubview(workingAchievement)
+        addSubview(doctorDetail)
         addSubview(foldBtn)
         
         doctorImage.snp.makeConstraints { (make) in
@@ -358,26 +332,15 @@ extension DoctorDetailHeaderForDoctorView {
             make.left.equalTo(focusedNumber.snp.right).offset(5)
         }
         
-        goodAt.snp.makeConstraints { (make) in
+        doctorDetail.snp.makeConstraints { (make) in
             make.top.equalTo(influence.snp.bottom).offset(11)
             make.left.equalToSuperview().offset(25)
             make.right.equalToSuperview().offset(-25)
         }
         
-        workingYears.snp.makeConstraints { (make) in
-            make.top.equalTo(goodAt.snp.bottom).offset(10)
-            make.left.equalToSuperview().offset(25)
-            make.right.equalToSuperview().offset(-25)
-        }
-        
-        workingAchievement.snp.makeConstraints { (make) in
-            make.top.equalTo(workingYears.snp.bottom).offset(10)
-            make.left.equalToSuperview().offset(25)
-            make.right.equalToSuperview().offset(-25)
-        }
         
         foldBtn.snp.makeConstraints { (make) in
-            make.top.equalTo(goodAt.snp.bottom).offset(10)
+            make.top.equalTo(doctorDetail.snp.bottom).offset(10)
             make.centerX.equalToSuperview()
             make.size.equalTo(16)
         }

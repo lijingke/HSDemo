@@ -31,6 +31,12 @@
 		543577D1236D677B00616AF8 /* PurchasedFollowUpPackageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543577C7236D677B00616AF8 /* PurchasedFollowUpPackageCell.swift */; };
 		543577D2236D677C00616AF8 /* FollowUpPackageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543577C8236D677B00616AF8 /* FollowUpPackageTableViewCell.swift */; };
 		543577D7236D67AB00616AF8 /* DoctorDetailProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543577D6236D67AB00616AF8 /* DoctorDetailProtocol.swift */; };
+		544191522372C4D5002AABA0 /* DoctorServiceHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544191512372C4D5002AABA0 /* DoctorServiceHeaderView.swift */; };
+		546694992370138900894801 /* UILabel+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 546694982370138900894801 /* UILabel+Extension.swift */; };
+		54A02CA323712292008E215C /* DoctorVisitScheduleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A02CA223712292008E215C /* DoctorVisitScheduleTableViewCell.swift */; };
+		54A02CA5237122AA008E215C /* DoctorVisitScheduleCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A02CA4237122AA008E215C /* DoctorVisitScheduleCollectionViewCell.swift */; };
+		54A02CA7237123D7008E215C /* DoctorVisitScheduleHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A02CA6237123D7008E215C /* DoctorVisitScheduleHeaderCell.swift */; };
+		54A02CA923712512008E215C /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A02CA823712512008E215C /* Date+Extension.swift */; };
 		54A3F94D236D6BB800285890 /* DoctorDetailForDoctorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A3F94C236D6BB800285890 /* DoctorDetailForDoctorProtocol.swift */; };
 		54A3F94F236D6BC000285890 /* DoctorDetailForDoctorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A3F94E236D6BC000285890 /* DoctorDetailForDoctorViewController.swift */; };
 		54A3F959236D6BCB00285890 /* DoctorNotOpenServiceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A3F950236D6BC800285890 /* DoctorNotOpenServiceCell.swift */; };
@@ -47,6 +53,7 @@
 		54A3F96A236D6D4800285890 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A3F969236D6D4800285890 /* String+Extension.swift */; };
 		54A3F96C236D6E1B00285890 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A3F96B236D6E1B00285890 /* UIViewController+Extension.swift */; };
 		54A3F96E236D6E3700285890 /* UIFont+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A3F96D236D6E3700285890 /* UIFont+Extension.swift */; };
+		54D4E7432374523900E4A5DB /* DoctorPublishedArticleDetailsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D4E7422374523900E4A5DB /* DoctorPublishedArticleDetailsCell.swift */; };
 		88B7561EFB68367CDAA2B63B /* Pods_XSDemoUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC04980249CEC9A59141AD0D /* Pods_XSDemoUITests.framework */; };
 		F676AAC403B54B731CC8D2EF /* Pods_XSDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9585DAECD8EA2E925C514B7F /* Pods_XSDemo.framework */; };
 /* End PBXBuildFile section */
@@ -99,6 +106,12 @@
 		543577C7236D677B00616AF8 /* PurchasedFollowUpPackageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PurchasedFollowUpPackageCell.swift; sourceTree = "<group>"; };
 		543577C8236D677B00616AF8 /* FollowUpPackageTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FollowUpPackageTableViewCell.swift; sourceTree = "<group>"; };
 		543577D6236D67AB00616AF8 /* DoctorDetailProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DoctorDetailProtocol.swift; sourceTree = "<group>"; };
+		544191512372C4D5002AABA0 /* DoctorServiceHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoctorServiceHeaderView.swift; sourceTree = "<group>"; };
+		546694982370138900894801 /* UILabel+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Extension.swift"; sourceTree = "<group>"; };
+		54A02CA223712292008E215C /* DoctorVisitScheduleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoctorVisitScheduleTableViewCell.swift; sourceTree = "<group>"; };
+		54A02CA4237122AA008E215C /* DoctorVisitScheduleCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoctorVisitScheduleCollectionViewCell.swift; sourceTree = "<group>"; };
+		54A02CA6237123D7008E215C /* DoctorVisitScheduleHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoctorVisitScheduleHeaderCell.swift; sourceTree = "<group>"; };
+		54A02CA823712512008E215C /* Date+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
 		54A3F94C236D6BB800285890 /* DoctorDetailForDoctorProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DoctorDetailForDoctorProtocol.swift; sourceTree = "<group>"; };
 		54A3F94E236D6BC000285890 /* DoctorDetailForDoctorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DoctorDetailForDoctorViewController.swift; sourceTree = "<group>"; };
 		54A3F950236D6BC800285890 /* DoctorNotOpenServiceCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DoctorNotOpenServiceCell.swift; sourceTree = "<group>"; };
@@ -115,6 +128,7 @@
 		54A3F969236D6D4800285890 /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		54A3F96B236D6E1B00285890 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
 		54A3F96D236D6E3700285890 /* UIFont+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Extension.swift"; sourceTree = "<group>"; };
+		54D4E7422374523900E4A5DB /* DoctorPublishedArticleDetailsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoctorPublishedArticleDetailsCell.swift; sourceTree = "<group>"; };
 		7A4D3AE91AD27F3ACEB43AB7 /* Pods-XSDemoUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XSDemoUITests.debug.xcconfig"; path = "Target Support Files/Pods-XSDemoUITests/Pods-XSDemoUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		8306F7A7C17C32F5ABEC2E72 /* Pods-XSDemoTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XSDemoTests.release.xcconfig"; path = "Target Support Files/Pods-XSDemoTests/Pods-XSDemoTests.release.xcconfig"; sourceTree = "<group>"; };
 		838F2BC2C60D9A588FEF0F38 /* Pods_XSDemoTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_XSDemoTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -254,15 +268,19 @@
 			isa = PBXGroup;
 			children = (
 				543577C4236D677B00616AF8 /* AssociatedEventCell.swift */,
+				543577C1236D677B00616AF8 /* DoctorDetailView.swift */,
 				543577C2236D677B00616AF8 /* DoctorDetailHeaderView.swift */,
 				543577C0236D677B00616AF8 /* DoctorDetailSectionHeaderCell.swift */,
-				543577C1236D677B00616AF8 /* DoctorDetailView.swift */,
 				543577C3236D677B00616AF8 /* DoctorPostArticleCell.swift */,
 				543577C6236D677B00616AF8 /* DoctorRecommendedCell.swift */,
 				543577C8236D677B00616AF8 /* FollowUpPackageTableViewCell.swift */,
 				543577C5236D677B00616AF8 /* LoadMoreFootView.swift */,
+				544191512372C4D5002AABA0 /* DoctorServiceHeaderView.swift */,
 				543577BF236D677A00616AF8 /* NoOnlineConsultationCell.swift */,
 				543577C7236D677B00616AF8 /* PurchasedFollowUpPackageCell.swift */,
+				54A02CA6237123D7008E215C /* DoctorVisitScheduleHeaderCell.swift */,
+				54A02CA223712292008E215C /* DoctorVisitScheduleTableViewCell.swift */,
+				54A02CA4237122AA008E215C /* DoctorVisitScheduleCollectionViewCell.swift */,
 				543577BA236D676100616AF8 /* SegmentBar */,
 			);
 			path = View;
@@ -285,6 +303,8 @@
 				54A3F966236D6D1C00285890 /* UIColor+Extension.swift */,
 				54A3F96B236D6E1B00285890 /* UIViewController+Extension.swift */,
 				54A3F96D236D6E3700285890 /* UIFont+Extension.swift */,
+				546694982370138900894801 /* UILabel+Extension.swift */,
+				54A02CA823712512008E215C /* Date+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -311,6 +331,7 @@
 			isa = PBXGroup;
 			children = (
 				54A3F955236D6BC900285890 /* DoctorDetailForDoctorView.swift */,
+				54D4E7422374523900E4A5DB /* DoctorPublishedArticleDetailsCell.swift */,
 				54A3F953236D6BC900285890 /* DoctorDetailHeaderForDoctorView.swift */,
 				54A3F957236D6BCB00285890 /* DoctorDetailSectionHeaderForDoctorCell.swift */,
 				54A3F958236D6BCB00285890 /* DoctorDetailSectionHeaderView.swift */,
@@ -554,14 +575,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				544191522372C4D5002AABA0 /* DoctorServiceHeaderView.swift in Sources */,
 				543577D1236D677B00616AF8 /* PurchasedFollowUpPackageCell.swift in Sources */,
 				54A3F96A236D6D4800285890 /* String+Extension.swift in Sources */,
+				54A02CA923712512008E215C /* Date+Extension.swift in Sources */,
 				543577B5236D673F00616AF8 /* DoctorDetailViewController.swift in Sources */,
 				5435776A236D60B600616AF8 /* AppDelegate.swift in Sources */,
+				54A02CA5237122AA008E215C /* DoctorVisitScheduleCollectionViewCell.swift in Sources */,
 				54A3F96C236D6E1B00285890 /* UIViewController+Extension.swift in Sources */,
 				543577CA236D677B00616AF8 /* DoctorDetailSectionHeaderCell.swift in Sources */,
 				54A3F959236D6BCB00285890 /* DoctorNotOpenServiceCell.swift in Sources */,
 				54A3F94D236D6BB800285890 /* DoctorDetailForDoctorProtocol.swift in Sources */,
+				546694992370138900894801 /* UILabel+Extension.swift in Sources */,
 				54A3F95E236D6BCB00285890 /* DoctorDetailForDoctorView.swift in Sources */,
 				54A3F95C236D6BCB00285890 /* DoctorDetailHeaderForDoctorView.swift in Sources */,
 				543577CD236D677B00616AF8 /* DoctorPostArticleCell.swift in Sources */,
@@ -569,6 +594,7 @@
 				5435776C236D60B600616AF8 /* SceneDelegate.swift in Sources */,
 				54A3F94F236D6BC000285890 /* DoctorDetailForDoctorViewController.swift in Sources */,
 				5435779A236D623800616AF8 /* HomeViewController.swift in Sources */,
+				54A02CA323712292008E215C /* DoctorVisitScheduleTableViewCell.swift in Sources */,
 				543577BE236D677000616AF8 /* SegmentBar.swift in Sources */,
 				543577CC236D677B00616AF8 /* DoctorDetailHeaderView.swift in Sources */,
 				543577B8236D675000616AF8 /* DoctorDetailModel.swift in Sources */,
@@ -577,6 +603,7 @@
 				543577CE236D677B00616AF8 /* AssociatedEventCell.swift in Sources */,
 				543577C9236D677B00616AF8 /* NoOnlineConsultationCell.swift in Sources */,
 				543577CB236D677B00616AF8 /* DoctorDetailView.swift in Sources */,
+				54D4E7432374523900E4A5DB /* DoctorPublishedArticleDetailsCell.swift in Sources */,
 				54A3F960236D6BCB00285890 /* DoctorDetailSectionHeaderForDoctorCell.swift in Sources */,
 				54A3F95A236D6BCB00285890 /* LoadMoreFootForDoctorView.swift in Sources */,
 				54A3F967236D6D1C00285890 /* UIColor+Extension.swift in Sources */,
@@ -586,6 +613,7 @@
 				543577BD236D677000616AF8 /* SegmentBarConfig.swift in Sources */,
 				54A3F965236D6CEA00285890 /* UIView+Extension.swift in Sources */,
 				54A3F95B236D6BCB00285890 /* DoctorPostArticleForDoctorCell.swift in Sources */,
+				54A02CA7237123D7008E215C /* DoctorVisitScheduleHeaderCell.swift in Sources */,
 				54A3F95F236D6BCB00285890 /* NoOnlineConsultationForDoctorCell.swift in Sources */,
 				54A3F95D236D6BCB00285890 /* FollowUpPackageForDoctorCell.swift in Sources */,
 			);
@@ -762,7 +790,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 3DBBG7HCTM;
+				DEVELOPMENT_TEAM = 8Y7C7SUC45;
 				INFOPLIST_FILE = XSDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -782,7 +810,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 3DBBG7HCTM;
+				DEVELOPMENT_TEAM = 8Y7C7SUC45;
 				INFOPLIST_FILE = XSDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
 				LD_RUNPATH_SEARCH_PATHS = (

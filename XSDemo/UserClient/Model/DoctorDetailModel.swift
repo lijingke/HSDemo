@@ -199,12 +199,40 @@ struct VisitScheduleEntity {
     var SunIsVisitPM: Int?;
 }
 
-extension UIView{
-    func addCorner(conrners: UIRectCorner , radius: CGFloat) {
-        let maskPath = UIBezierPath(roundedRect: self.bounds, byRoundingCorners: conrners, cornerRadii: CGSize(width: radius, height: radius))
-        let maskLayer = CAShapeLayer()
-        maskLayer.frame = self.bounds
-        maskLayer.path = maskPath.cgPath
-        self.layer.mask = maskLayer
+struct visitScheduleEntityOld {
+    /// 一周内第几天（7代表周日）
+    var day: Int = 0
+    /// 上午是否出诊 1-是 0-否
+    var is_visit_am: Int?
+    /// 下午是否出诊 1-是 0-否
+    var is_visit_pm: Int
+//    public func setupEntity(day: Int,is_visit_am:Int, is_visit_pm: Int) {
+//        self.day = day
+//        self.is_visit_am = is_visit_am
+//        self.is_visit_pm = is_visit_pm
+//    }
+    init(day: Int,is_visit_am:Int, is_visit_pm: Int) {
+        self.day = day
+        self.is_visit_am = is_visit_am
+        self.is_visit_pm = is_visit_pm
     }
+    
+    
+}
+
+/// 出诊表
+public struct VisitScheduleEntityNew {
+    /// 1-7分别表示周一至周日
+    public var day: Int = 0;
+    /// 上午是否出诊
+    public var isVisitAm: Int = 0;
+    /// 下午是否出诊
+    public var isVisitPm: Int = 0;
+}
+
+public struct UnvisitTimeEntity {
+    /// 开始时间
+    public var startTime: Int64?;
+    /// 结束时间
+    public var endTime: Int64?;
 }

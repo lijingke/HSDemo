@@ -20,4 +20,8 @@ extension UIColor {
                   alpha: alpha)
     }
     
+    public static func rgb(hex: UInt32, alpha: CGFloat? = 1.0) -> UIColor {
+      return UIColor(hex: hex, alpha: alpha ?? 1.0);
+    }
+    
 }

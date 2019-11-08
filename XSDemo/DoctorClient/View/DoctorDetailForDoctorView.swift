@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MJRefresh
 
 class DoctorDetailForDoctorView: UIView {
     
@@ -27,6 +28,8 @@ class DoctorDetailForDoctorView: UIView {
     /// 医生服务的数据源
     public var dataSource = DoctorServiceEntity()
     
+    var isExpand: Bool = false
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureUI()
@@ -46,9 +49,13 @@ class DoctorDetailForDoctorView: UIView {
         var frame = self.tableHeaderView.frame
         frame.size.height = height
         tableHeaderView.frame = frame
-        tableHeaderView.configData(getDoctorInfoData())
         tableHeaderView.setNeedsLayout()
         tableView.tableHeaderView = self.tableHeaderView
+        
+        tableView.mj_header = MJRefreshHeader(refreshingBlock: {
+            [weak self] in
+            self?.tableView.mj_header.endRefreshing()
+        })
         
         self.layoutIfNeeded()
     }
@@ -66,7 +73,7 @@ class DoctorDetailForDoctorView: UIView {
         table.register(FollowUpPackageForDoctorCell.self, forCellReuseIdentifier: FollowUpPackageForDoctorCell.reuseId)
         table.register(DoctorPostArticleForDoctorCell.self, forCellReuseIdentifier: DoctorPostArticleForDoctorCell.reuseId)
         table.register(NoOnlineConsultationForDoctorCell.self, forCellReuseIdentifier: NoOnlineConsultationForDoctorCell.reuseId)
-        
+        table.register(DoctorPublishedArticleDetailsCell.self, forCellReuseIdentifier: DoctorPublishedArticleDetailsCell.reuseId)
         table.separatorStyle = .none
         return table
     }()
@@ -206,7 +213,25 @@ extension DoctorDetailForDoctorView: UITableViewDataSource {
                 }
             case 1:
                 if dataSource.visitSchedule.count > 0 {
-                    return UITableViewCell()
+//                    return UITableViewCell()
+                    guard let cell = tableView.dequeueReusableCell(withIdentifier: DoctorPublishedArticleDetailsCell.reuseId, for: indexPath) as? DoctorPublishedArticleDetailsCell else {
+                        return UITableViewCell()
+                    }
+                    cell.delegate = self
+                    cell.foldBtn.isSelected = isExpand
+                    cell.configureData(ArticleInfoEntity())
+                    
+                    cell.foldAction = { [weak self]() in
+                        self?.isExpand.toggle()
+                        if cell.foldBtn.isSelected {
+                            cell.contentLabel.numberOfLines = 0
+                        }else {
+                            cell.contentLabel.numberOfLines = 3
+                        }
+                        tableView.reloadData()
+                    }
+                    return cell
+                    
                 }else {
                     guard let cell = tableView.dequeueReusableCell(withIdentifier: DoctorNotOpenServiceCell.reuseId, for: indexPath) as? DoctorNotOpenServiceCell else {
                         return UITableViewCell()
@@ -274,12 +299,12 @@ extension DoctorDetailForDoctorView: UIScrollViewDelegate {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         
-        /// 禁止Tableview偏移量小于0时下拉
-        var offset = tableView.contentOffset
-        if offset.y <= 0 {
-            offset.y = 0
-        }
-        tableView.contentOffset = offset
+//        /// 禁止Tableview偏移量小于0时下拉
+//        var offset = tableView.contentOffset
+//        if offset.y <= 0 {
+//            offset.y = 0
+//        }
+//        tableView.contentOffset = offset
         
         let offsetY = scrollView.contentOffset.y
         let vc = self.getFirstViewController()
@@ -341,7 +366,7 @@ extension DoctorDetailForDoctorView {
             entity.purchasesTime = 3
             dataSource.followUpPkgs.append(entity)
         }
-        for _ in 0...3 {
+        for _ in 0...0 {
             let entity = VisitScheduleEntity()
             dataSource.visitSchedule.append(entity)
         }
@@ -371,7 +396,6 @@ extension DoctorDetailForDoctorView {
     public func configureData(doctorInfo: DoctorInfoEntity, dataSource: DoctorServiceEntity, isDoctorSelf: Bool) {
         self.doctorInfo = doctorInfo
         self.dataSource = dataSource
-        
         self.isDoctorSelf = isDoctorSelf
         
         let shouldChangeBackgroudColor = dataSource.followUpPkgs.count == 0 && dataSource.visitSchedule.count == 0 && dataSource.articles.count == 0
@@ -384,6 +408,15 @@ extension DoctorDetailForDoctorView {
             tableHeaderView.isWatchBtn.isHidden = true
         }
         
+        tableHeaderView.configData(doctorInfo)
+        tableHeaderView.setNeedsLayout()
+        tableHeaderView.layoutIfNeeded()
         tableView.reloadData()
+    }
+}
+
+extension DoctorDetailForDoctorView: MyPatientClickEventProtocol {
+    func doctorPublishedEvent() {
+        
     }
 }

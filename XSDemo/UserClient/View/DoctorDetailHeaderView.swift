@@ -28,23 +28,19 @@ class DoctorDetailHeaderView: UIView {
     }
     
     func showAllInfo(_ isShowAll: Bool) {
-        workingYears.isHidden = !isShowAll
-        workingAchievement.isHidden = !isShowAll
+        
+        var line = 0
+        
+        let allLines = doctorDetail.getLinesArrayOfString()
+        
+        if allLines?.count ?? 0 > 2 {
+            line = allLines?[1] == "\n" ? 3 : 2
+        }
+        
         if isShowAll {
-            goodAt.numberOfLines = 0
-            foldBtn.snp.remakeConstraints { (make) in
-                make.top.equalTo(workingAchievement.snp.bottom).offset(10)
-                make.centerX.equalToSuperview()
-                make.size.equalTo(16)
-            }
+            doctorDetail.numberOfLines = 0
         }else {
-            goodAt.numberOfLines = 2
-            foldBtn.snp.remakeConstraints { (make) in
-                make.top.equalTo(goodAt.snp.bottom).offset(10)
-                make.centerX.equalToSuperview()
-                make.size.equalTo(16)
-            }
-            
+            doctorDetail.numberOfLines = line
         }
         layoutIfNeeded()
     }
@@ -175,29 +171,11 @@ class DoctorDetailHeaderView: UIView {
         return label
     }()
     
-    lazy var goodAt: UILabel = {
-        let label = UILabel()
-        label.textColor = .white
-        label.font = UIFont.regular(14)
-        label.numberOfLines = 2
-        return label
-    }()
-    
-    lazy var workingYears: UILabel = {
+    lazy var doctorDetail: UILabel = {
         let label = UILabel()
         label.textColor = .white
         label.font = UIFont.regular(14)
         label.numberOfLines = 0
-        label.isHidden = true
-        return label
-    }()
-    
-    lazy var workingAchievement: UILabel = {
-        let label = UILabel()
-        label.textColor = .white
-        label.font = UIFont.regular(14)
-        label.numberOfLines = 0
-        label.isHidden = true
         return label
     }()
     
@@ -246,15 +224,64 @@ extension DoctorDetailHeaderView {
             isWatchBtn.layer.borderColor = UIColor.white.cgColor
         }
         
-        if let text = doctorInfo.goodAt {
-            goodAt.text = "擅长：\(text)"
+        var goodAt = ""
+        var workingYears = ""
+        var achievement = ""
+        
+        if let text = doctorInfo.goodAt, text.count > 0 {
+            goodAt = "擅长：\(text)"
         }
-        if let text = doctorInfo.workingYears {
-            workingYears.text = "从业年：\(text)"
+        if let text = doctorInfo.workingYears,  text.count > 0 {
+            if goodAt.count > 0 {
+                workingYears = "\n\n从业年：\(text)"
+            }else {
+                workingYears = "从业年：\(text)"
+            }
         }
-        if let text = doctorInfo.workingAchievement {
-            workingAchievement.text = "行业成就：\(text)"
+        if let text = doctorInfo.workingAchievement,  text.count > 0 {
+            if goodAt.count > 0 || workingYears.count > 0 {
+                achievement = "\n\n行业成就：\(text)"
+            }else {
+                achievement = "行业成就：\(text)"
+            }
         }
+        
+        doctorDetail.text = goodAt + workingYears + achievement
+        
+        let allLines = doctorDetail.getLinesArrayOfString()
+        
+        if allLines?.count ?? 0 > 2 {
+                        
+            if allLines?[1] == "\n" {
+                doctorDetail.numberOfLines = 3
+                if allLines?[2].contains("\n") ?? false {
+                    doctorDetail.lineBreakMode = .byCharWrapping
+                }else {
+                    doctorDetail.lineBreakMode = .byTruncatingTail
+                }
+            }else {
+                doctorDetail.numberOfLines = 2
+                if allLines?[2] == "\n" {
+                    doctorDetail.lineBreakMode = .byCharWrapping
+                }else {
+                    doctorDetail.lineBreakMode = .byTruncatingTail
+
+                }
+            }
+            foldBtn.isHidden = allLines?[1] == "\n" && allLines?.count == 3
+        }else {
+            doctorDetail.numberOfLines = allLines?.count ?? 0
+            foldBtn.isHidden = true
+        }
+        
+        if foldBtn.isHidden == true {
+            self.snp.remakeConstraints { (make) in
+                make.top.equalTo(doctorImage.snp.top).offset(-17.5)
+                make.bottom.equalTo(doctorDetail.snp.bottom).offset(16)
+                make.width.equalTo(UIScreen.main.bounds.width)
+            }
+        }
+                
     }
     
     fileprivate func configureUI() {
@@ -273,9 +300,7 @@ extension DoctorDetailHeaderView {
         addSubview(focusedPrefix)
         addSubview(focusedNumber)
         addSubview(focusedTail)
-        addSubview(goodAt)
-        addSubview(workingYears)
-        addSubview(workingAchievement)
+        addSubview(doctorDetail)
         addSubview(foldBtn)
         
         doctorImage.snp.makeConstraints { (make) in
@@ -358,26 +383,14 @@ extension DoctorDetailHeaderView {
             make.left.equalTo(focusedNumber.snp.right).offset(5)
         }
         
-        goodAt.snp.makeConstraints { (make) in
-            make.top.equalTo(influence.snp.bottom).offset(11)
+        doctorDetail.snp.makeConstraints { (make) in
+            make.top.equalTo(influence.snp.bottom).offset(19)
             make.left.equalToSuperview().offset(25)
             make.right.equalToSuperview().offset(-25)
         }
-        
-        workingYears.snp.makeConstraints { (make) in
-            make.top.equalTo(goodAt.snp.bottom).offset(10)
-            make.left.equalToSuperview().offset(25)
-            make.right.equalToSuperview().offset(-25)
-        }
-        
-        workingAchievement.snp.makeConstraints { (make) in
-            make.top.equalTo(workingYears.snp.bottom).offset(10)
-            make.left.equalToSuperview().offset(25)
-            make.right.equalToSuperview().offset(-25)
-        }
-        
+                
         foldBtn.snp.makeConstraints { (make) in
-            make.top.equalTo(goodAt.snp.bottom).offset(10)
+            make.top.equalTo(doctorDetail.snp.bottom).offset(10)
             make.centerX.equalToSuperview()
             make.size.equalTo(16)
         }

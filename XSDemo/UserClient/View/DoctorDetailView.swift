@@ -39,12 +39,22 @@ class DoctorDetailView: UIView {
     public var expandArray = [[false, false, false], [false, false, false]]
     
     /// 标记当前使用的数据源，0为医生与我，1为医生服务
-    private var segmentTag = 0
+    private var segmentTag = 0 {
+        didSet {
+            let shouldChangeBackgroudColor = doctorServiceDataSource.followUpPkgs.count == 0 && doctorServiceDataSource.visitSchedule.count == 0 && doctorServiceDataSource.articles.count == 0
+            if shouldChangeBackgroudColor && segmentTag == 1 {
+                tableView.backgroundColor = .white
+            }else {
+                tableView.backgroundColor = .groupTableViewBackground
+            }
+        }
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureUI()
         createData()
+        //        configureData(DoctorWithMeEntity(), DoctorServiceEntity())
     }
     
     required init?(coder: NSCoder) {
@@ -52,7 +62,7 @@ class DoctorDetailView: UIView {
     }
     
     deinit {
-        print("释放")
+        
     }
     
     override func draw(_ rect: CGRect) {
@@ -76,13 +86,13 @@ class DoctorDetailView: UIView {
         var frame = self.tableHeaderView.frame
         frame.size.height = height
         tableHeaderView.frame = frame
-        tableHeaderView.configData(getDoctorInfoData())
+        //        tableHeaderView.configData(getDoctorInfoData())
         tableHeaderView.setNeedsLayout()
         tableView.tableHeaderView = self.tableHeaderView
         
-        tableView.mj_footer = MJRefreshAutoNormalFooter(refreshingBlock: { [weak self]() in
-            self?.tableView.mj_footer.endRefreshing()
-            self?.tableView.mj_footer.endRefreshingWithNoMoreData()
+        tableView.mj_header = MJRefreshHeader(refreshingBlock: {
+            [weak self] in
+            self?.tableView.mj_header.endRefreshing()
         })
         
         self.layoutIfNeeded()
@@ -103,6 +113,8 @@ class DoctorDetailView: UIView {
         table.register(DoctorRecommendedCell.self, forCellReuseIdentifier: DoctorRecommendedCell.reuseId)
         table.register(AssociatedEventCell.self, forCellReuseIdentifier: AssociatedEventCell.reuseId)
         table.register(NoOnlineConsultationCell.self, forCellReuseIdentifier: NoOnlineConsultationCell.reuseId)
+        table.register(DoctorVisitScheduleTableViewCell.self, forCellReuseIdentifier: DoctorVisitScheduleTableViewCell.reuseId)
+        table.register(DoctorVisitScheduleHeaderCell.self, forCellReuseIdentifier: DoctorVisitScheduleHeaderCell.reuseId)
         table.separatorStyle = .none
         return table
     }()
@@ -215,7 +227,13 @@ extension DoctorDetailView: DoctorDetailViewProtocol {
 extension DoctorDetailView: UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         if section == 0 {
-            return segmentBar
+            if shouldHideHeader {
+                let header = DoctorDetailSectionHeaderView()
+                header.backgroundColor = UIColorFromRGB(rgbValue: 0xFF7056)
+                return header
+            }else {
+                return segmentBar
+            }
         }
         return UIView()
     }
@@ -224,7 +242,7 @@ extension DoctorDetailView: UITableViewDelegate {
         
         if section == 0 {
             
-            return shouldHideHeader ? 0 : 50
+            return shouldHideHeader ? 10 : 50
         }else if segmentTag == 0 {
             if section == 1 {
                 if doctorAndMeDataSource.followUpPkgs.count == 0 {
@@ -252,26 +270,51 @@ extension DoctorDetailView: UITableViewDelegate {
         foot.delegate = self
         foot.atSection = section
         foot.loadMoreBtn.isSelected = expandArray[segmentTag][section]
+        
+        if segmentTag == 0 {
+            switch section {
+            case 0:
+                foot.loadMoreBtn.isHidden = doctorAndMeDataSource.followUpPkgs.count < 4
+            case 1:
+                foot.loadMoreBtn.isHidden = doctorAndMeDataSource.articles.count < 4
+            case 2:
+                foot.loadMoreBtn.isHidden = doctorAndMeDataSource.events.count < 4
+            default:
+                break
+            }
+        }else if segmentTag == 1 {
+            switch section {
+            case 0:
+                foot.loadMoreBtn.isHidden = doctorServiceDataSource.followUpPkgs.count < 4
+            case 1:
+                foot.loadMoreBtn.isHidden = true
+            case 2:
+                foot.loadMoreBtn.isHidden = doctorServiceDataSource.articles.count < 4
+            default:
+                break
+            }
+        }
+        
         return foot
     }
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         if segmentTag == 0 {
             if section == 0 {
-                return doctorAndMeDataSource.followUpPkgs.count > 3 ? 40 : 0
+                return doctorAndMeDataSource.followUpPkgs.count > 3 ? 40 : 10
             }else if section == 1 {
-                return doctorAndMeDataSource.articles.count > 3 ? 40 : 0
+                return doctorAndMeDataSource.articles.count > 3 ? 40 : 10
             }else if section == 2 {
-                return doctorAndMeDataSource.events.count > 3 ? 40 : 0
+                return doctorAndMeDataSource.events.count > 3 ? 40 : 10
             }
             
         }else if segmentTag == 1 {
             if section == 0 {
-                return doctorServiceDataSource.followUpPkgs.count > 3 ? 40 : 0
+                return doctorServiceDataSource.followUpPkgs.count > 3 ? 40 : 10
             }else if section == 1 {
-                return doctorServiceDataSource.visitSchedule.count > 3 ? 40 : 0
+                return 10
             }else if section == 2 {
-                return doctorServiceDataSource.articles.count > 3 ? 40 : 0
+                return doctorServiceDataSource.articles.count > 3 ? 40 : 10
             }
             
         }
@@ -347,11 +390,7 @@ extension DoctorDetailView: UITableViewDataSource {
                 }
             case 1:
                 let num = doctorServiceDataSource.visitSchedule.count
-                if num > 3 && expandArray[segmentTag][section] == false {
-                    return 4
-                }else {
-                    return num > 0 ? num + 1 : 0
-                }
+                return num > 0 ? 3 : 0
             case 2:
                 let num = doctorServiceDataSource.articles.count
                 if num > 3 && expandArray[segmentTag][section] == false {
@@ -436,7 +475,31 @@ extension DoctorDetailView: UITableViewDataSource {
                 }
                 
             case 1:
-                return UITableViewCell()
+                if indexPath.row == 1 {
+                    guard let cell = tableView.dequeueReusableCell(withIdentifier: DoctorVisitScheduleHeaderCell.reuseId, for: indexPath) as? DoctorVisitScheduleHeaderCell else { return UITableViewCell() }
+                    cell.loadData(data: UnvisitTimeEntity())
+                    cell.setNeedsLayout()
+                    cell.layoutIfNeeded()
+                    setNeedsLayout()
+                    layoutIfNeeded()
+                    return cell
+                }
+                
+                if indexPath.row == 2 {
+                    guard let cell = tableView.dequeueReusableCell(withIdentifier: DoctorVisitScheduleTableViewCell.reuseId, for: indexPath) as? DoctorVisitScheduleTableViewCell else { return UITableViewCell() }
+                    //                var arr:[VisitScheduleEntityNew] = []
+                    //                for index in 1...7 {
+                    //                    var entity = VisitScheduleEntityNew()
+                    //                    entity.day = index
+                    //                    entity.isVisitAm = 0
+                    //                    entity.isVisitPm = 1
+                    //                    arr.append(entity)
+                    //                }
+                    //                cell.loadData(data: arr)
+                    return cell
+                    
+                }
+                
             case 2:
                 guard let cell = tableView.dequeueReusableCell(withIdentifier: DoctorPostArticleCell.reuseId, for: indexPath) as? DoctorPostArticleCell else {
                     return UITableViewCell()
@@ -456,12 +519,12 @@ extension DoctorDetailView: UITableViewDataSource {
 extension DoctorDetailView: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         
-        /// 禁止Tableview偏移量小于0时下拉
-        var offset = tableView.contentOffset
-        if offset.y <= 0 {
-            offset.y = 0
-        }
-        tableView.contentOffset = offset
+        //        /// 禁止Tableview偏移量小于0时下拉
+        //        var offset = tableView.contentOffset
+        //        if offset.y <= 0 {
+        //            offset.y = 0
+        //        }
+        //        tableView.contentOffset = offset
         
         let offsetY = scrollView.contentOffset.y
         let vc = self.getFirstViewController()
@@ -496,8 +559,8 @@ extension DoctorDetailView {
         doctorInfo.officeName = "皮肤科"
         doctorInfo.influenceNumber = "2.67万"
         doctorInfo.follewNumber = "1409"
-        doctorInfo.goodAt = "治疗恐艾心理疏导，艾滋病、慢性治疗恐艾心理病,治疗恐艾心理治疗恐艾心理疏导，艾滋病、慢性治疗恐艾心理病,治疗恐艾心理治疗恐艾心理疏导，艾滋病、慢性治疗恐艾心理病,治疗恐艾心理治疗恐艾心理疏导，艾滋病、慢性治疗恐艾心理病,治疗恐艾心理"
-        doctorInfo.workingYears = "2001年"
+        doctorInfo.goodAt = "治疗恐年疗治疗恐年疗治疗恐年疗治疗恐年疗恐年"
+        doctorInfo.workingYears = "2001年有的 的 。"
         doctorInfo.workingAchievement = "这是行业成就的详情信息展示所有的超过一行直接换行。"
         return doctorInfo
     }
@@ -525,27 +588,27 @@ extension DoctorDetailView {
         let info = DoctorWithMeEntity()
         self.doctorAndMeDataSource = info
         
-        for _ in 0...3 {
+        for _ in 0...2 {
             var entity = FollowUpPackageEntity()
             entity.packageName = "随访包的名称随访包"
-            
+
             entity.hasUsed = false
             entity.expireDate = "2019年9月1日"
             entity.consultRemainTime = 90
             doctorAndMeDataSource.followUpPkgs.append(entity)
         }
         
-        for _ in 0...3 {
-            let entity = getArticleInfo()
-            doctorAndMeDataSource.articles.append(entity)
-        }
+        //        for _ in 0...2 {
+        //            let entity = getArticleInfo()
+        //            doctorAndMeDataSource.articles.append(entity)
+        //        }
+        //
+        //        for _ in 0...2 {
+        //            let entity = getEvetEntity()
+        //            doctorAndMeDataSource.events.append(entity)
+        //        }
         
-        for _ in 0...3 {
-            let entity = getEvetEntity()
-            doctorAndMeDataSource.events.append(entity)
-        }
-        
-        for _ in 0...3 {
+        for _ in 0...2 {
             var entity = FollowUpPackageEntity()
             entity.packageName = "随访包名称"
             entity.consultRemainTime = 200
@@ -557,11 +620,11 @@ extension DoctorDetailView {
             entity.purchasesTime = 3
             doctorServiceDataSource.followUpPkgs.append(entity)
         }
-        for _ in 0...3 {
-            let entity = VisitScheduleEntity()
-            doctorServiceDataSource.visitSchedule.append(entity)
-        }
-        for _ in 0...3 {
+        //        for _ in 0...2 {
+        //            let entity = VisitScheduleEntity()
+        //            doctorServiceDataSource.visitSchedule.append(entity)
+        //        }
+        for _ in 0...2 {
             let entity = getArticleInfo()
             doctorServiceDataSource.articles.append(entity)
         }
@@ -578,6 +641,13 @@ extension DoctorDetailView {
             tableView.backgroundColor = .groupTableViewBackground
         }
         
+        //        let info = getDoctorInfoData()
+        //        self.doctorInfo = info
+        tableHeaderView.configData(getDoctorInfoData())
+        tableHeaderView.setNeedsLayout()
+        tableHeaderView.layoutIfNeeded()
+        
+        
         tableView.reloadData()
         
     }
@@ -590,14 +660,10 @@ extension DoctorDetailView {
             segmentTag = 1
         }
         
-        let shouldChangeBackgroudColor = doctorServiceDataSource.followUpPkgs.count == 0 && doctorServiceDataSource.visitSchedule.count == 0 && doctorServiceDataSource.articles.count == 0
-        
-        if shouldChangeBackgroudColor && segmentTag == 1 {
-            tableView.backgroundColor = .white
-        }else {
-            tableView.backgroundColor = .groupTableViewBackground
-        }
-        
+        doctorInfo = getDoctorInfoData()
+        tableHeaderView.configData(doctorInfo)
+        tableHeaderView.setNeedsLayout()
+        tableHeaderView.layoutIfNeeded()
         tableView.reloadData()
     }
     

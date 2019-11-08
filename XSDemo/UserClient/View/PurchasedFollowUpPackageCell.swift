@@ -7,13 +7,13 @@
 //
 
 import UIKit
- 
+
 class PurchasedFollowUpPackageCell: UITableViewCell {
     
     static var reuseId = "PurchasedFollowUpPackageCell"
     weak var delegate: DoctorDetailViewProtocol?
     var entity: FollowUpPackageEntity?
-
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.selectionStyle = .none
@@ -23,7 +23,7 @@ class PurchasedFollowUpPackageCell: UITableViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-        
+    
     public func configureData(_ entity: FollowUpPackageEntity) {
         
         self.entity = entity
@@ -39,7 +39,7 @@ class PurchasedFollowUpPackageCell: UITableViewCell {
                 attachment.image = UIImage(named: "label_not_used")
             }
             let font = packageName.font
-
+            
             attachment.bounds = CGRect(x: 0, y: (font!.capHeight - (attachment.image?.size.height)!) / 2 - 1, width: (attachment.image?.size.width)!, height: (attachment.image?.size.height)!)
             let attrImage = NSAttributedString(attachment: attachment)
             
@@ -83,12 +83,12 @@ class PurchasedFollowUpPackageCell: UITableViewCell {
             make.left.equalToSuperview().offset(25)
             make.right.equalToSuperview().offset(-40)
         }
-
+        
         expiredTime.snp.makeConstraints { (make) in
             make.top.equalTo(packageName.snp.bottom).offset(5)
             make.left.equalTo(packageName)
         }
-
+        
         consultingBtn.snp.makeConstraints { (make) in
             make.top.equalTo(expiredTime.snp.bottom).offset(9)
             make.left.equalToSuperview().offset(25)
@@ -100,10 +100,11 @@ class PurchasedFollowUpPackageCell: UITableViewCell {
     }
     
     lazy var bgImageView:UIImageView = {
-      let bg = UIImageView();
-      let image = UIImage.init(named: "bg_shadow")?.resizableImage(withCapInsets: UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20), resizingMode: UIImage.ResizingMode.stretch)
-      bg.image = image;
-      return bg;
+        let bg = UIImageView();
+        let image = UIImage.init(named: "bg_shadow")?.resizableImage(withCapInsets: UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20), resizingMode: UIImage.ResizingMode.stretch)
+        bg.image = image;
+        bg.isUserInteractionEnabled = true
+        return bg;
     }()
     
     lazy var packageName: UILabel = {
